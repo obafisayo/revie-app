@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const url = 'https://codeguru.isaac0yen.com';
@@ -8,6 +8,7 @@ const Login = () => {
         email: '',
         password: '',
     });
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,12 +17,15 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-        const response = await axios.post(`${url}/api/users/login`, formData);
-        console.log('User Logged in successfully:', response.data);
-        alert("login success")
-        setFormData({email: '', password: '' });
+            const response = await axios.post(`${url}/api/users/login`, formData);
+            console.log('User Logged in successfully:', response.data);
+            alert(response.data.message);
+            localStorage.setItem('token', response.data.token);
+            navigate('/reviews');
+            setFormData({ email: '', password: '' });
         } catch (error) {
-        console.error('Error registering user:', error.message);
+            console.error('Error logging in:', error.message);
+            alert("Invalid Username or password!!!")
         }
     };
 
@@ -78,13 +82,13 @@ const Login = () => {
             </form>
             <div className="gap-2 flex items-center flexcol">
                 <small>Dont have an account?</small>
-                <button
-                    className="bg-sky-300 hover:bg-sky-500 shadow-md text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                    <Link to={"/register"}>
-                        Register
-                    </Link>
-                </button>
+                <Link to={"/register"}>
+                    <button
+                        className="bg-sky-300 hover:bg-sky-500 shadow-md text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                            Register
+                    </button>
+                </Link>
             </div>
         </div>
     );

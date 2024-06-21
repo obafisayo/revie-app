@@ -19,10 +19,11 @@ const RegisterForm = () => {
         try {
         const response = await axios.post(`${url}/api/users/register`, formData);
         console.log('User registered successfully:', response.data);
-        alert("Registration success")
+        alert(response.data.message)
         setFormData({ name: '', email: '', password: '' });
         } catch (error) {
-        console.error('Error registering user:', error.message);
+            console.error('Error registering user:', error.message);
+            alert("User might already be existing!!!, try logging in 🙏")
         }
     };
 
@@ -97,13 +98,13 @@ const RegisterForm = () => {
             </form>
             <div className="gap-2 flex items-center flexcol">
                 <small>Already have an account?</small>
-                <button
-                    className="bg-sky-300 hover:bg-sky-500 shadow-md text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                    <Link to={"/login"}>
-                        Login
-                    </Link>
-                </button>
+                <Link to={"/login"}>
+                    <button
+                        className="bg-sky-300 hover:bg-sky-500 shadow-md text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                            Login
+                    </button>
+                </Link>
             </div>
         </div>
     );
