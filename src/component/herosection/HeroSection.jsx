@@ -22,7 +22,7 @@ const HeroSection = () => {
             </Link>
           </button>
           <button className="bg-transparent border border-white text-white px-6 py-2 rounded-full font-semibold">
-            <Link to={"#"}>
+            <Link to={"/login"}>
               Login
             </Link>
           </button>

@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const RegisterForm = () => {
+const Login = () => {
     const url = 'https://codeguru.isaac0yen.com';
     const [formData, setFormData] = useState({
-        name: '',
         email: '',
         password: '',
     });
@@ -17,10 +16,10 @@ const RegisterForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-        const response = await axios.post(`${url}/api/users/register`, formData);
-        console.log('User registered successfully:', response.data);
-        alert("Registration success")
-        setFormData({ name: '', email: '', password: '' });
+        const response = await axios.post(`${url}/api/users/login`, formData);
+        console.log('User Logged in successfully:', response.data);
+        alert("login success")
+        setFormData({email: '', password: '' });
         } catch (error) {
         console.error('Error registering user:', error.message);
         }
@@ -32,24 +31,6 @@ const RegisterForm = () => {
                 onSubmit={handleSubmit}
                 className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md"
             >
-                <div className="mb-4">
-                <label
-                    className="block text-gray-700 font-bold mb-2"
-                    htmlFor="name"
-                >
-                    Name
-                </label>
-                <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="name"
-                    type="text"
-                    placeholder="Enter your name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                />
-                </div>
                 <div className="mb-4">
                 <label
                     className="block text-gray-700 font-bold mb-2"
@@ -91,22 +72,22 @@ const RegisterForm = () => {
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     type="submit"
                 >
-                    Register
+                    Login
                 </button>
                 </div>
             </form>
             <div className="gap-2 flex items-center flexcol">
-                <small>Already have an account?</small>
+                <small>Dont have an account?</small>
                 <button
                     className="bg-sky-300 hover:bg-sky-500 shadow-md text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
-                    <Link to={"/login"}>
-                        Login
+                    <Link to={"/register"}>
+                        Register
                     </Link>
                 </button>
             </div>
         </div>
     );
-};
+}
 
-export default RegisterForm;
+export default Login
